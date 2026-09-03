@@ -1,1 +1,0 @@
-# 5g-security-knowledge-base
