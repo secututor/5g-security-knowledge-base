@@ -1,8 +1,11 @@
-root: ./
-
+$schema: https://api.gitbook.com/gitbook-docs.yaml
 site:
-  title: "5G Security Knowledge Base"
-
-structure:
-  readme: README.md
-  summary: SUMMARY.md
+  title: 5G Security Knowledge Base
+  structure:
+    - type: space
+      key: space-1
+      title: Docs
+      path: docs
+      default: true
+      content:
+        directory: ./docs
