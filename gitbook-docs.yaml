@@ -4,8 +4,8 @@ site:
   structure:
     - type: space
       key: space-1
-      title: Docs
-      path: docs
+      title: 5G Security Knowledge Base
+      path: untitled
       default: true
       content:
-        directory: ./docs
+        directory: ./untitled
