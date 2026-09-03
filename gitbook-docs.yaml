@@ -1,0 +1,7 @@
+root: ./
+
+site:
+  title: "5G Security Knowledge Base"
+  structure:
+    readme: README.md
+    summary: SUMMARY.md
