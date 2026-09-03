@@ -2,4 +2,5 @@ site:
   title: "5G Security Knowledge Base"
   structure:
     - space:
-        dir: ./
+        title: "5G Security Knowledge Base"
+        content: ./
