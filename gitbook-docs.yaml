@@ -1,10 +1,10 @@
-$schema: https://api.gitbook.com/gitbook-docs.yaml
+$schema: https://api.gitbook.com/v1/gitbook-docs.yaml
+
 site:
   title: "5G Security Knowledge Base"
   structure:
     - type: space
-      key: main-space
+      space: main
       title: "5G Security Knowledge Base"
-      path: ""
       content:
         dir: ./
