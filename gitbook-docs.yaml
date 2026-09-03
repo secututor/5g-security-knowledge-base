@@ -3,5 +3,6 @@ root: ./
 site:
   title: "5G Security Knowledge Base"
   structure:
-    readme: README.md
-    summary: SUMMARY.md
+    - space: "5G Security Knowledge Base"
+      readme: README.md
+      summary: SUMMARY.md
