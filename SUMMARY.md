@@ -5,7 +5,8 @@
 ## 01. Fundamentals
 * [Overview](01-fundamentals/README.md)
 
-## 02. UE & Privacy Security* [Issue #001](02-ue-privacy/issue-001.md)
+## 02. UE & Privacy Security
+* [Issue #001](02-ue-privacy/issue-001.md)
 * [Issue #002](02-ue-privacy/issue-002.md)
 * [Issue #003](02-ue-privacy/issue-003.md)
 * [Issue #004](02-ue-privacy/issue-004.md)
