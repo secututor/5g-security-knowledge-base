@@ -1,0 +1,18 @@
+# 개행 정책: 텍스트는 LF로 통일 (GitBook/GitHub 문서 일관성)
+* text=auto eol=lf
+
+# 명시적으로 LF를 강제할 텍스트 유형
+*.md    text eol=lf
+*.svg   text eol=lf
+*.yaml  text eol=lf
+*.yml   text eol=lf
+*.json  text eol=lf
+*.txt   text eol=lf
+
+# 이진 이미지 등은 Git이 개행/텍스트 변환을 하지 않음
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.webp  binary
+*.pdf   binary

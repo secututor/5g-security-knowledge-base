@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 560" role="img" aria-label="5G 키 계층 구조: K에서 CK/IK, K_AUSF, K_SEAF, K_AMF를 거쳐 NAS/gNB/AS 키까지 파생되는 트리">
+  <title>5G Key Hierarchy</title>
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#5f6368"/>
+    </marker>
+    <style>
+      .box   { fill:#e8f0fe; stroke:#1a73e8; stroke-width:1.5; }
+      .box2  { fill:#e6f4ea; stroke:#188038; stroke-width:1.5; }
+      .box3  { fill:#fef7e0; stroke:#e37400; stroke-width:1.5; }
+      .lbl   { font-family:Segoe UI, Arial, sans-serif; font-size:14px; fill:#202124; text-anchor:middle; }
+      .sub   { font-family:Segoe UI, Arial, sans-serif; font-size:11px; fill:#5f6368; text-anchor:middle; }
+      .edge  { stroke:#5f6368; stroke-width:1.4; fill:none; marker-end:url(#arrow); }
+    </style>
+  </defs>
+
+  <!-- Level 0: K -->
+  <rect class="box" x="330" y="20" width="100" height="44" rx="6"/>
+  <text class="lbl" x="380" y="40">K</text>
+  <text class="sub" x="380" y="56">USIM / 홈망 공유 키</text>
+
+  <!-- Level 1: CK/IK -->
+  <rect class="box" x="330" y="104" width="100" height="40" rx="6"/>
+  <text class="lbl" x="380" y="129">CK / IK</text>
+
+  <!-- Level 2: K_AUSF -->
+  <rect class="box" x="330" y="184" width="100" height="40" rx="6"/>
+  <text class="lbl" x="380" y="209">K_AUSF</text>
+
+  <!-- Level 3: K_SEAF -->
+  <rect class="box" x="330" y="264" width="100" height="40" rx="6"/>
+  <text class="lbl" x="380" y="289">K_SEAF</text>
+
+  <!-- Level 4: K_AMF -->
+  <rect class="box" x="330" y="344" width="100" height="40" rx="6"/>
+  <text class="lbl" x="380" y="369">K_AMF</text>
+
+  <!-- Level 5: NAS keys (left), K_gNB (right) -->
+  <rect class="box2" x="150" y="424" width="120" height="40" rx="6"/>
+  <text class="lbl" x="210" y="449">K_NASint / enc</text>
+
+  <rect class="box3" x="490" y="424" width="110" height="40" rx="6"/>
+  <text class="lbl" x="545" y="449">K_gNB</text>
+
+  <!-- Level 6: AS keys under K_gNB -->
+  <rect class="box3" x="470" y="500" width="150" height="44" rx="6"/>
+  <text class="lbl" x="545" y="520">K_RRCint/enc</text>
+  <text class="sub" x="545" y="536">K_UPint / K_UPenc</text>
+
+  <!-- Edges (vertical spine) -->
+  <path class="edge" d="M380,64 L380,104"/>
+  <path class="edge" d="M380,144 L380,184"/>
+  <path class="edge" d="M380,224 L380,264"/>
+  <path class="edge" d="M380,304 L380,344"/>
+
+  <!-- K_AMF -> NAS keys (left) and K_gNB (right) -->
+  <path class="edge" d="M355,384 C300,408 250,404 210,424"/>
+  <path class="edge" d="M405,384 C460,408 510,404 545,424"/>
+
+  <!-- K_gNB -> AS keys -->
+  <path class="edge" d="M545,464 L545,500"/>
+</svg>
