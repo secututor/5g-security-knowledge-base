@@ -44,7 +44,8 @@ AI 에이전트와 사람 기여자 모두 이 규칙을 기준으로 작업합�
 ### 규칙
 - 새 카테고리는 `NN-{kebab-case-name}/` 형식으로 만든다. `NN`은 2자리 0-padding 번호.
 - 카테고리 폴더 번호는 `subject/subject-list.md`의 섹션(A~J) 분류 체계와 일치시킨다.
-- `subject/`, `ai/`, `.kiro/`는 **작업/설정용**이며 `SUMMARY.md` 목차에는 넣지 않는다.
+- **모든 카테고리 폴더에는 `README.md`(개요 + 이슈 목록)를 둔다.** 이 README가 SUMMARY 계층의 부모 항목이 된다 (§4).
+- `subject/`, `ai/`, `.kiro/`, `.gitbook/`은 **작업/설정용**이며 `SUMMARY.md` 목차에는 넣지 않는다.
 
 ---
 
@@ -151,22 +152,27 @@ NN-MM-{Issue_Name}.md
 
 `SUMMARY.md`는 GitBook 목차의 단일 소스다. 문서를 추가/이동/삭제하면 **반드시** 함께 갱신한다.
 
-### 형식
+### 계층 구조 (중요)
+GitBook 사이드바에서 카테고리가 **접기/펼치기(화살표)** 되게 하려면,
+카테고리를 `## 헤더`로 두지 말고 **부모 항목(카테고리 README 링크) + 들여쓰기(2칸)한 자식**으로 작성한다.
+
 ```markdown
-## NN. {Category Title}
-* [NN-MM {Issue Name}](NN-folder/NN-MM-{Issue_Name}.md)
+* [NN. {Category Title}](NN-folder/README.md)
+  * [NN-MM {Issue Name}](NN-folder/NN-MM-{Issue_Name}.md)
+  * [NN-MM {Issue Name}](NN-folder/NN-MM-{Issue_Name}.md)
 ```
+
+- **부모 항목**은 반드시 그 카테고리의 `README.md`를 가리킨다 (§1의 카테고리 README 필수 규칙과 연동).
+- **자식 항목**은 부모 아래 **공백 2칸 들여쓰기**로 둔다 → 이때만 GitBook이 접기 화살표를 만든다.
+- `## 헤더`는 큰 묶음(예: `## 5G Security Issues`, `## References`)에만 쓴다.
+  카테고리 자체를 `## 헤더`로 두면 평면(flat) 목록이 되어 접히지 않는다.
 
 ### 링크 경로
 파일명에 공백이 없으므로(§2) **URL 인코딩(`%20`)이 필요 없다.** 실제 파일 경로를 그대로 쓴다.
 
-```markdown
-* [02-01 SUPI Exposure](02-ue-privacy/02-01-SUPI_Exposure.md)
-```
-
-- 제목의 리스트 라벨(`02-01 SUPI Exposure`)은 사람이 읽기 좋게 공백으로 표기해도 된다 (링크 경로만 정확하면 됨).
+- 리스트 라벨(`02-01 SUPI Exposure`)은 사람이 읽기 좋게 공백으로 표기해도 된다 (링크 경로만 정확하면 됨).
 - 링크 경로는 실제 파일 경로(언더스코어 포함)와 정확히 일치시킨다.
-- 섹션 순서와 항목 순서는 번호 오름차순 유지.
+- 항목 순서는 번호 오름차순 유지.
 
 ---
 
@@ -241,6 +247,6 @@ NN-MM-{Issue_Name}.md
 - [ ] 원문 내용을 옮겼다면 출처를 명시했는가 (§6.1)
 - [ ] 원문 요약과 작성자 해설이 구분되는가 (§6.2)
 - [ ] 로고/제3자 그림을 무단 사용하지 않았는가, 다이어그램은 직접 그렸는가 (§6.4)
-- [ ] `SUMMARY.md`에 항목이 추가/갱신되었고 링크 경로가 실제 파일명(언더스코어 포함)과 일치하는가
+- [ ] `SUMMARY.md`에 항목이 추가/갱신되었고 (카테고리 부모 README + 2칸 들여쓰기 자식 계층), 링크 경로가 실제 파일명(언더스코어)과 일치하는가
 - [ ] 다이어그램을 넣었다면 `rules-diagrams.md` 규칙을 따랐는가
 - [ ] GitHub/GitBook 양쪽에서 렌더링 가능한 문법만 사용했는가
