@@ -13,39 +13,63 @@ AI 에이전트와 사람 기여자 모두 이 규칙을 기준으로 작업합�
 
 ## 1. 디렉토리 구조
 
-카테고리별로 번호가 붙은 디렉토리에 문서를 배치합니다.
+이 리포지토리는 **지식의 성격(영역, domain)** 을 최상위로 두고, 그 아래에 하위 영역과
+번호가 붙은 카테고리를 배치한다. 최상위는 "번호"가 아니라 "영역"이다.
 
 ```
 5g-security-knowledge-base/
-├── SUMMARY.md              # GitBook 목차 (필수, 신규 문서 추가 시 반드시 갱신)
-├── README.md               # 사이트 소개 페이지
-├── gitbook-docs.yaml       # GitBook 사이트 설정 (수정 지양)
-├── 01-fundamentals/        # 기본 개념/개요
-├── 02-ue-privacy/          # UE & Privacy Security
-├── 03-auth-nas/            # Authentication & NAS Security
-├── 04-ran-security/        # RAN Security
-├── 05-gnb-interfaces/      # gNB Interfaces & Protocols
-├── 06-core-security/       # Core Network Security
-├── 07-sba-security/        # SBA & Service Security
-├── 08-network-slicing/     # Network Slicing Security
-├── 09-nfv-cloud/           # NFV & Cloud Native Security
-├── 10-oran-security/       # O-RAN Security
-├── 11-v2x-supply-chain/    # V2X & Supply Chain Security
-├── 12-3gpp-standards/      # 3GPP 표준 참조
-├── 13-enisa-framework/     # ENISA 프레임워크 참조
-├── 14-nist-series/         # NIST 시리즈 참조 (US 가이드라인: NIST+CISA)
-├── 15-research-papers/     # 참조 논문
-├── subject/                # 원본 마스터 데이터 (편집용, 사이트 목차엔 미포함)
-├── ai/                     # 사람용 안내/프롬프트 (사이트 목차엔 미포함)
-├── .gitbook/assets/        # 이미지/SVG (GitBook 표준 경로, 사이트 목차엔 미포함)
-└── .kiro/steering/         # AI 자동 로드 규칙 (rules-authoring.md, rules-diagrams.md)
+├── SUMMARY.md                      # GitBook 목차 (필수, 신규 문서 추가 시 반드시 갱신)
+├── README.md                       # 사이트 소개 페이지
+├── gitbook-docs.yaml               # GitBook 사이트 설정 (수정 지양)
+├── security-fundamentals/          # [영역] 일반 보안 기초 (5G 무관: 암호, PKI, Zero Trust, 위협모델링 등)
+│   └── README.md
+├── 5g-security/                    # [영역] 5G 보안
+│   ├── README.md
+│   ├── fundamentals/               #   [하위영역] 5G 보안 개념/원리 (키 계층, SUCI, NAS/RRC 등)
+│   │   └── 01-01-....md
+│   ├── security-risks/             #   [하위영역] 위협/취약점 카탈로그 (100선)
+│   │   ├── README.md
+│   │   ├── 01-ue-privacy/          #     UE & Privacy Security
+│   │   ├── 02-auth-nas/            #     Authentication & NAS Security
+│   │   ├── 03-ran-security/        #     RAN Security
+│   │   ├── 04-gnb-interfaces/      #     gNB Interfaces & Protocols
+│   │   ├── 05-core-security/       #     Core Network Security
+│   │   ├── 06-sba-security/        #     SBA & Service Security
+│   │   ├── 07-network-slicing/     #     Network Slicing Security
+│   │   ├── 08-nfv-cloud/           #     NFV & Cloud Native Security
+│   │   ├── 09-oran-security/       #     O-RAN Security
+│   │   └── 10-v2x-supply-chain/    #     V2X & Supply Chain Security
+│   └── references/                 #   [하위영역] 표준·가이드라인·논문 정의
+│       ├── README.md
+│       ├── 3gpp-standards/         #     3GPP / O-RAN 표준 (TS/TR)
+│       ├── enisa-framework/        #     EU ENISA 프레임워크 (EU-N)
+│       ├── nist-series/            #     US NIST & CISA 가이드라인 (US-N)
+│       └── research-papers/        #     참조 논문 (P-N)
+├── subject/                        # 원본 마스터 데이터 (편집용, 사이트 목차엔 미포함)
+├── ai/                             # 사람용 안내/프롬프트 (사이트 목차엔 미포함)
+├── .gitbook/assets/                # 이미지/SVG (GitBook 표준 경로, 사이트 목차엔 미포함)
+└── .kiro/steering/                 # AI 자동 로드 규칙 (rules-authoring.md, rules-diagrams.md)
 ```
 
+### 콘텐츠 타입 (중요)
+문서는 "타입"에 따라 배치 위치와 템플릿(§3)이 다르다.
+
+| 타입 | 성격 | 위치 | 템플릿 |
+|------|------|------|--------|
+| `issue` | 5G 위협/취약점/리스크 | `5g-security/security-risks/NN-*/` | §3.1 10항목 풀 템플릿 |
+| `concept` | 5G 보안 개념/원리 해설 | `5g-security/fundamentals/` | §3.2 개념 템플릿 |
+| `general` | 5G 무관 일반 보안 지식 | `security-fundamentals/` | §3.2 개념 템플릿 |
+| `reference` | 표준/기관/논문 정의 | `5g-security/references/*/` | §3.3 참조 템플릿 |
+
 ### 규칙
-- 새 카테고리는 `NN-{kebab-case-name}/` 형식으로 만든다. `NN`은 2자리 0-padding 번호.
-- 카테고리 폴더 번호는 `subject/subject-list.md`의 섹션(A~J) 분류 체계와 일치시킨다.
-- **모든 카테고리 폴더에는 `README.md`(개요 + 이슈 목록)를 둔다.** 이 README가 SUMMARY 계층의 부모 항목이 된다 (§4).
+- **최상위는 영역**(`security-fundamentals/`, `5g-security/`)이다. 최상위에 번호 폴더를 두지 않는다.
+- **번호는 `security-risks/` 하위 카테고리에서만** `NN-{kebab-case-name}/` 형식으로 쓴다. `NN`은 2자리 0-padding.
+- `security-risks` 카테고리 번호는 `subject/subject-list.md`의 섹션(A~J) 분류 체계와 순서를 맞춘다.
+  (subject-list의 A=UE/Privacy → `01-ue-privacy`, B=Auth/NAS → `02-auth-nas` … 순으로 대응)
+- **각 `security-risks` 카테고리 폴더와 하위영역(`fundamentals`, `security-risks`, `references`)에는 `README.md`(개요 + 목록)를 둔다.** 이 README가 SUMMARY 계층의 부모 항목이 된다 (§4).
+- `references/` 하위 폴더는 번호 없이 의미 이름(`3gpp-standards` 등)을 쓴다.
 - `subject/`, `ai/`, `.kiro/`, `.gitbook/`은 **작업/설정용**이며 `SUMMARY.md` 목차에는 넣지 않는다.
+- 새 영역이 필요하면(예: `cloud-security/`) 최상위 형제로 추가하고 §4의 SUMMARY 묶음(`##`)도 함께 추가한다.
 
 ---
 
@@ -66,28 +90,35 @@ NN-MM-{Issue_Name}.md
 
 ### 예시 (실제 파일)
 ```
-02-ue-privacy/02-01-SUPI_Exposure.md
-03-auth-nas/03-01-5G-AKA_Attack_Surface.md
-07-sba-security/07-06-OAuth_Token_Abuse.md
+5g-security/security-risks/01-ue-privacy/01-01-SUPI_Exposure.md
+5g-security/security-risks/02-auth-nas/02-01-5G-AKA_Attack_Surface.md
+5g-security/security-risks/06-sba-security/06-06-OAuth_Token_Abuse.md
 ```
 
 ### 규칙
 - 이슈명은 `subject/subject-list.md` 테이블의 **Security Issue** 컬럼을 기준으로 하되,
   **공백은 `_`로 바꾸고**, 파일 시스템에서 문제가 되는 문자(`/`, `'`)는 아래처럼 정규화한다.
   - 공백 → `_` (예: `SUPI Exposure` → `SUPI_Exposure`)
-  - `EAP-AKA'` → `EAP-AKA_prime` (예: `03-02-EAP-AKA_prime_Attack.md`)
-  - `IMSI/SUPI` → `IMSI-SUPI` (예: `02-02-IMSI-SUPI_Catching.md`)
-  - `HTTP/2` → `HTTP2` (예: `07-07-HTTP2_DoS.md`)
-  - `AI/ML` → `AI-ML` (예: `10-05-AI-ML_Model_Poisoning.md`)
+  - `EAP-AKA'` → `EAP-AKA_prime` (예: `02-02-EAP-AKA_prime_Attack.md`)
+  - `IMSI/SUPI` → `IMSI-SUPI` (예: `01-02-IMSI-SUPI_Catching.md`)
+  - `HTTP/2` → `HTTP2` (예: `06-07-HTTP2_DoS.md`)
+  - `AI/ML` → `AI-ML` (예: `09-05-AI-ML_Model_Poisoning.md`)
   - `Hardware/Platform` → `Hardware-Platform`
 - 하이픈(`-`)은 구분자(`NN-MM-`) 및 기존 정규화(`IMSI-SUPI` 등)에만 쓰고, 단어 사이 공백 대체는 `_`로 한다.
 - 개요/랜딩 페이지는 카테고리 폴더에 `README.md`로 둔다 (신규 카테고리는 `README.md`로 통일).
 
 ---
 
-## 3. 문서 섹션 구조 (이슈 문서)
+## 3. 문서 섹션 구조
 
-모든 이슈 문서는 `subject/5G_Security.md`가 제안한 **10항목 풀 템플릿**을 따른다.
+문서는 **콘텐츠 타입**(§1)에 따라 다른 템플릿을 쓴다.
+- `issue` → §3.1 10항목 풀 템플릿
+- `concept` / `general` → §3.2 개념 템플릿
+- `reference` → §3.3 참조 템플릿
+
+### 3.1 이슈 문서 (`issue`) — 10항목 풀 템플릿
+
+모든 이슈 문서(`5g-security/security-risks/`)는 `subject/5G_Security.md`가 제안한 **10항목 풀 템플릿**을 따른다.
 아래 섹션을 **이 순서대로** 포함한다.
 
 원문 제안 흐름: **Threat → Target → Vulnerability → Attack Scenario → Impact → 3GPP → ENISA(EU) → NIST/CISA·NSA(US) → Paper → Korean Explanation**
@@ -117,33 +148,69 @@ NN-MM-{Issue_Name}.md
 {예방 / 탐지 / 완화 통제. 표준이 정의한 보안기능과 운영 관점 대응을 구분해 서술.}
 
 ## 7. 3GPP / O-RAN 표준
-{TS/TR 번호. 여러 개면 쉼표로. 예: TS 33.501, TR 33.809. → 12-3gpp-standards 참조}
+{TS/TR 번호. 여러 개면 쉼표로. 예: TS 33.501, TR 33.809. → references/3gpp-standards 참조}
 
 ## 8. 관련 US 가이드라인
-{US-N 형식. 예: US-2 또는 US-4,5. → 14-nist-series 참조. 관점: NIST=구현/검증, CISA·NSA=위협/안보}
+{US-N 형식. 예: US-2 또는 US-4,5. → references/nist-series 참조. 관점: NIST=구현/검증, CISA·NSA=위협/안보}
 
 ## 9. 관련 EU 가이드라인
-{EU-N 형식. 예: EU-1. → 13-enisa-framework 참조. 관점: ENISA=위협 지형}
+{EU-N 형식. 예: EU-1. → references/enisa-framework 참조. 관점: ENISA=위협 지형}
 
 ## 10. 참조 논문
-{P번호. 예: P1, P2. → 15-research-papers 참조}
+{P번호. 예: P1, P2. → references/research-papers 참조}
 ```
 
-### 규칙
+#### 규칙
 - **10개 섹션 모두 포함**한다. 다만 근거가 부족한 섹션(예: 특정 이슈에 대한 논문 없음)은
   억지로 채우지 말고 "해당 없음" 또는 비워두고 사유를 남긴다 (환각 금지).
 - 섹션 7~10의 **참조 코드(US-N, EU-N, P-N, TS/TR)**는 임의로 만들지 말고
   `subject/subject-list.md` 및 `subject/5G_Security.md`의 정의를 그대로 사용한다.
+- references 링크 상대경로: security-risks 문서 → `../../references/{폴더}/README.md`.
 - 섹션 2~6(공격 대상/취약점/시나리오/영향/대응)은 이 지식베이스의 **핵심 콘텐츠**다.
   단순 참조 나열에 그치지 말고 4대 출처(3GPP/ENISA/NIST/CISA·NSA)와 논문을 **연결·해설**한다.
 - 관점 교차: 같은 이슈라도 ENISA(위협 지형) / NIST(구현·검증) / CISA·NSA(위협·안보) / 3GPP(표준)의
   서로 다른 시각을 본문에 녹인다.
 
-### 선택 섹션 (필요 시 추가)
+#### 선택 섹션 (필요 시 추가)
 ```markdown
 ## 관련 이슈            # 다른 NN-MM 문서로의 상호 참조 링크
 ## 출처                 # 원문을 상당 부분 참고한 경우 (§6.5 참조)
 ```
+
+### 3.2 개념 문서 (`concept` / `general`) — 개념 템플릿
+
+5G 보안 개념(`5g-security/fundamentals/`)과 일반 보안 지식(`security-fundamentals/`)은
+10항목 강제 없이 아래 자유형 템플릿을 기준으로 한다. 제목은 개념명(영문 유지 가능).
+
+```markdown
+# {Concept Name}
+
+## 1. 개요 (What)
+{개념이 무엇인지 한국어 정의.}
+
+## 2. 배경 / 원리 (Why & How)
+{왜 필요한가, 어떻게 동작하는가. 필요 시 다이어그램(rules-diagrams.md).}
+
+## 3. 상세 (Details)
+{구성요소·절차·수식·용어 등 핵심 내용. 소제목 자유 구성.}
+
+## 4. 보안 관점 (Security Relevance)
+{이 개념이 보안에 왜 중요한가. concept라면 관련 5G 이슈로 링크.}
+
+## 관련 문서            # (선택) 관련 이슈/개념/참조 링크
+## 출처                 # (선택) 외부 자료를 참고한 경우 (§6)
+```
+
+- `concept` 파일명은 이슈처럼 카테고리 순번을 쓸 수 있다(예: `01-01-5G_Key_Hierarchy.md`).
+  단, 여기서 `NN`은 fundamentals 내부의 자체 순번이다(카테고리 번호와 무관).
+- `general` 파일명은 의미 이름(kebab/underscore)을 쓴다(예: `pki-basics.md`, `zero-trust.md`). 공백 금지(§2).
+- references 링크 상대경로: fundamentals 문서 → `../references/{폴더}/README.md`.
+
+### 3.3 참조 문서 (`reference`) — 참조 템플릿
+
+`5g-security/references/*/README.md`는 이슈 문서가 인용하는 표준·기관·논문의 **정의집**이다.
+표(코드 ↔ 정식 명칭 ↔ 관련 이슈 영역) 형식을 기본으로 하며, 참조 코드(TS/TR, EU-N, US-N, P-N)를
+`subject/`의 정의와 일치시킨다. 새 참조를 임의로 만들지 않는다(환각 금지, §5·§6).
 
 ---
 
@@ -153,26 +220,30 @@ NN-MM-{Issue_Name}.md
 `SUMMARY.md`는 GitBook 목차의 단일 소스다. 문서를 추가/이동/삭제하면 **반드시** 함께 갱신한다.
 
 ### 계층 구조 (중요)
-GitBook 사이드바에서 카테고리가 **접기/펼치기(화살표)** 되게 하려면,
-카테고리를 `## 헤더`로 두지 말고 **부모 항목(카테고리 README 링크) + 들여쓰기(2칸)한 자식**으로 작성한다.
+`SUMMARY.md`는 **4개 최상위 묶음(`##` 헤더)** 으로 구성한다.
 
 ```markdown
-* [NN. {Category Title}](NN-folder/README.md)
-  * [NN-MM {Issue Name}](NN-folder/NN-MM-{Issue_Name}.md)
-  * [NN-MM {Issue Name}](NN-folder/NN-MM-{Issue_Name}.md)
+## Security Fundamentals   # 일반 보안 지식 (security-fundamentals/)
+## 5G Fundamentals         # 5G 보안 개념 (5g-security/fundamentals/)
+## 5G Security Risks       # 위협 100선 (5g-security/security-risks/)
+## References              # 표준/기관/논문 (5g-security/references/)
 ```
 
-- **부모 항목**은 반드시 그 카테고리의 `README.md`를 가리킨다 (§1의 카테고리 README 필수 규칙과 연동).
-- **자식 항목**은 부모 아래 **공백 2칸 들여쓰기**로 둔다 → 이때만 GitBook이 접기 화살표를 만든다.
-- `## 헤더`는 큰 묶음(예: `## 5G Security Issues`, `## References`)에만 쓴다.
-  카테고리 자체를 `## 헤더`로 두면 평면(flat) 목록이 되어 접히지 않는다.
+GitBook 사이드바에서 카테고리가 **접기/펼치기(화살표)** 되게 하려면,
+카테고리를 `## 헤더`로 두지 말고 **부모 항목(README 링크) + 들여쓰기(2칸)한 자식**으로 작성한다.
+`5g-security/security-risks/`는 3단 계층(영역 README → 카테고리 README → 이슈)이므로 들여쓰기도 3단이다.
 
-### 링크 경로
-파일명에 공백이 없으므로(§2) **URL 인코딩(`%20`)이 필요 없다.** 실제 파일 경로를 그대로 쓴다.
+```markdown
+## 5G Security Risks
+* [5G Security Risks](5g-security/security-risks/README.md)
+  * [NN. {Category Title}](5g-security/security-risks/NN-folder/README.md)
+    * [NN-MM {Issue Name}](5g-security/security-risks/NN-folder/NN-MM-{Issue_Name}.md)
+```
 
-- 리스트 라벨(`02-01 SUPI Exposure`)은 사람이 읽기 좋게 공백으로 표기해도 된다 (링크 경로만 정확하면 됨).
-- 링크 경로는 실제 파일 경로(언더스코어 포함)와 정확히 일치시킨다.
-- 항목 순서는 번호 오름차순 유지.
+- **부모 항목**은 반드시 그 영역/카테고리의 `README.md`를 가리킨다 (§1의 README 필수 규칙과 연동).
+- **자식 항목**은 부모 아래 **공백 2칸씩 들여쓰기**로 둔다 → 이때만 GitBook이 접기 화살표를 만든다.
+- `## 헤더`는 위 4개 최상위 묶음에만 쓴다. 카테고리 자체를 `## 헤더`로 두면 평면(flat) 목록이 되어 접히지 않는다.
+- 링크 경로는 리포지토리 루트 기준 전체 경로(`5g-security/...`)를 쓴다.
 
 ---
 
@@ -181,6 +252,7 @@ GitBook 사이드바에서 카테고리가 **접기/펼치기(화살표)** 되�
 - 본문 설명은 **한국어**로 작성한다. (기존 문서 스타일 유지)
 - 기술 용어(SUPI, gNB, NAS, RRC, NRF 등)와 표준 명칭(TS 33.501 등)은 원문 그대로 사용.
 - 제목(`# NN-MM. Title`)의 이슈명은 영문 유지.
+- `concept`/`general` 문서 제목은 개념명(영문 유지 가능)으로 자유롭게 쓴다(§3.2).
 - 문장은 간결하게. 과장 없이 사실 위주로.
 - 표준/논문을 인용할 때 없는 내용을 지어내지 않는다 (환각 금지). 근거가 없으면 명시하지 않는다.
 
@@ -200,7 +272,7 @@ GitBook 사이드바에서 카테고리가 **접기/펼치기(화살표)** 되�
   - `Source: NIST, CSWP 36A "Protecting Subscriber Identifiers with SUCI", 2026.`
   - `Source: CISA/NSA, "5G Network Slicing Security Considerations".`
   - `Source: 3GPP, TS 33.501.`
-- 각 이슈 문서의 참조 코드(US-N/EU-N/P-N/TS·TR)는 이미 `12`~`15` 폴더의 정의 문서로 연결되므로,
+- 각 이슈 문서의 참조 코드(US-N/EU-N/P-N/TS·TR)는 이미 `5g-security/references/` 하위 정의 문서로 연결되므로,
   본문에서 원문 내용을 직접 옮겨 쓴 경우에만 별도 출처 문구를 추가한다.
 
 ### 6.2 원문과 작성자 해설을 구분

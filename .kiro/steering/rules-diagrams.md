@@ -95,10 +95,12 @@ Mermaid로 표현이 어려운 경우에만 사용한다.
 .gitbook/assets/{설명적-파일명}.svg
 ```
 ```markdown
-![5G 키 계층 구조](../.gitbook/assets/01-01-5G_Key_Hierarchy.svg)
+![5G 키 계층 구조](../../.gitbook/assets/01-01-5G_Key_Hierarchy.svg)
 ```
 - 위치: `.gitbook/assets/` (GitBook 웹 에디터 업로드 기본 경로와 동일 → 직접 작성본과 업로드본 통합 관리)
-- 참조 경로는 문서 위치 기준 상대경로. (카테고리 폴더 안 문서면 `../.gitbook/assets/...`)
+- 참조 경로는 문서 위치 기준 상대경로. 문서가 깊을수록 `../`를 더 붙인다.
+  - `5g-security/fundamentals/*.md` → `../../.gitbook/assets/...`
+  - `5g-security/security-risks/NN-*/*.md` → `../../../.gitbook/assets/...`
 
 ### SVG 파일명 규칙 (중요)
 SVG 파일명은 **그 이미지가 들어가는 문서 파일명(stem)을 prefix**로, **그림 설명을 suffix**로 붙인다.
@@ -114,10 +116,10 @@ SVG 파일명은 **그 이미지가 들어가는 문서 파일명(stem)을 prefi
 
 예시:
 ```
-문서:  02-ue-privacy/02-05-False_Base_Station.md
-SVG:   .gitbook/assets/02-05-False_Base_Station_attack_flow.svg   # 공격 흐름도
-       .gitbook/assets/02-05-False_Base_Station_topology.svg      # 구성도
-       .gitbook/assets/02-05-False_Base_Station.svg               # 그림 1개면 suffix 생략
+문서:  5g-security/security-risks/01-ue-privacy/01-05-False_Base_Station.md
+SVG:   .gitbook/assets/01-05-False_Base_Station_attack_flow.svg   # 공격 흐름도
+       .gitbook/assets/01-05-False_Base_Station_topology.svg      # 구성도
+       .gitbook/assets/01-05-False_Base_Station.svg               # 그림 1개면 suffix 생략
 ```
 > 여러 문서에서 공유되는 공통 개념도(특정 문서에 종속되지 않는 것)는 예외적으로 설명형 이름을 쓸 수 있다.
 > 예: `common_5g_architecture.svg`. 단, 특정 문서 전용 그림은 위 prefix 규칙을 따른다.
