@@ -220,29 +220,33 @@ NN-MM-{Issue_Name}.md
 `SUMMARY.md`는 GitBook 목차의 단일 소스다. 문서를 추가/이동/삭제하면 **반드시** 함께 갱신한다.
 
 ### 계층 구조 (중요)
-`SUMMARY.md`는 **4개 최상위 묶음(`##` 헤더)** 으로 구성한다.
+`SUMMARY.md`는 **2개 최상위 묶음(`##` 헤더)** 으로 구성한다.
 
 ```markdown
 ## Security Fundamentals   # 일반 보안 지식 (security-fundamentals/)
-## 5G Fundamentals         # 5G 보안 개념 (5g-security/fundamentals/)
-## 5G Security Risks       # 위협 100선 (5g-security/security-risks/)
-## References              # 표준/기관/논문 (5g-security/references/)
+## 5G Security             # 5G 보안 영역 전체 (5g-security/)
 ```
 
-GitBook 사이드바에서 카테고리가 **접기/펼치기(화살표)** 되게 하려면,
-카테고리를 `## 헤더`로 두지 말고 **부모 항목(README 링크) + 들여쓰기(2칸)한 자식**으로 작성한다.
-`5g-security/security-risks/`는 3단 계층(영역 README → 카테고리 README → 이슈)이므로 들여쓰기도 3단이다.
+`5G Security` 묶음은 **부모 항목(`5g-security/README.md`)** 아래에
+`fundamentals` / `security-risks` / `references` 세 하위영역을 **들여쓰기로 중첩**한다.
+그래야 GitBook 사이드바에서 `5G Security` 아래에 세 하위영역이 접기/펼치기로 보인다.
 
 ```markdown
-## 5G Security Risks
-* [5G Security Risks](5g-security/security-risks/README.md)
-  * [NN. {Category Title}](5g-security/security-risks/NN-folder/README.md)
-    * [NN-MM {Issue Name}](5g-security/security-risks/NN-folder/NN-MM-{Issue_Name}.md)
+## 5G Security
+* [5G Security](5g-security/README.md)
+  * [Fundamentals](5g-security/fundamentals/README.md)
+    * [01-01 5G Key Hierarchy](5g-security/fundamentals/01-01-5G_Key_Hierarchy.md)
+  * [Security Risks](5g-security/security-risks/README.md)
+    * [NN. {Category Title}](5g-security/security-risks/NN-folder/README.md)
+      * [NN-MM {Issue Name}](5g-security/security-risks/NN-folder/NN-MM-{Issue_Name}.md)
+  * [References](5g-security/references/README.md)
+    * [3GPP / O-RAN Standards](5g-security/references/3gpp-standards/README.md)
 ```
 
-- **부모 항목**은 반드시 그 영역/카테고리의 `README.md`를 가리킨다 (§1의 README 필수 규칙과 연동).
+- **부모 항목**은 반드시 그 영역/하위영역/카테고리의 `README.md`를 가리킨다 (§1의 README 필수 규칙과 연동).
 - **자식 항목**은 부모 아래 **공백 2칸씩 들여쓰기**로 둔다 → 이때만 GitBook이 접기 화살표를 만든다.
-- `## 헤더`는 위 4개 최상위 묶음에만 쓴다. 카테고리 자체를 `## 헤더`로 두면 평면(flat) 목록이 되어 접히지 않는다.
+  security-risks 이슈는 `5g-security → security-risks → 카테고리 → 이슈`로 4단 들여쓰기(8칸)가 된다.
+- `## 헤더`는 위 2개 최상위 묶음에만 쓴다. 하위영역을 `## 헤더`로 두면 `5G Security` 부모로 묶이지 않는다.
 - 링크 경로는 리포지토리 루트 기준 전체 경로(`5g-security/...`)를 쓴다.
 
 ---
