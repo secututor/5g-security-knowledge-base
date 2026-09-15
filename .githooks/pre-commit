@@ -1,0 +1,31 @@
+#!/bin/sh
+# Enforce commit identity: block commits authored/committed by anyone other than the allowed identity.
+# Applies to THIS repository only (activated via core.hooksPath=.githooks).
+
+ALLOWED_NAME="secututor"
+ALLOWED_EMAIL="secututor@users.noreply.github.com"
+
+# Resolve the identity git WOULD use for this commit (respects env overrides too).
+CUR_NAME="$(git var GIT_AUTHOR_IDENT | sed 's/ <.*//')"
+CUR_EMAIL="$(git var GIT_AUTHOR_IDENT | sed 's/.*<//; s/>.*//')"
+COM_NAME="$(git var GIT_COMMITTER_IDENT | sed 's/ <.*//')"
+COM_EMAIL="$(git var GIT_COMMITTER_IDENT | sed 's/.*<//; s/>.*//')"
+
+fail() {
+  echo "----------------------------------------------------------------"
+  echo "COMMIT BLOCKED by .githooks/pre-commit"
+  echo "  This repo only allows commits as: $ALLOWED_NAME <$ALLOWED_EMAIL>"
+  echo "  Detected author   : $CUR_NAME <$CUR_EMAIL>"
+  echo "  Detected committer: $COM_NAME <$COM_EMAIL>"
+  echo ""
+  echo "Fix with:"
+  echo "  git config user.name  \"$ALLOWED_NAME\""
+  echo "  git config user.email \"$ALLOWED_EMAIL\""
+  echo "----------------------------------------------------------------"
+  exit 1
+}
+
+if [ "$CUR_NAME" != "$ALLOWED_NAME" ] || [ "$CUR_EMAIL" != "$ALLOWED_EMAIL" ]; then fail; fi
+if [ "$COM_NAME" != "$ALLOWED_NAME" ] || [ "$COM_EMAIL" != "$ALLOWED_EMAIL" ]; then fail; fi
+
+exit 0

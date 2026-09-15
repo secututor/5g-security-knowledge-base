@@ -1,0 +1,45 @@
+#!/bin/sh
+# Enforce identity across ALL commits being pushed (last line of defense).
+# Blocks the push if any outgoing commit has a non-allowed author or committer.
+
+ALLOWED_EMAIL="secututor@users.noreply.github.com"
+ALLOWED_NAME="secututor"
+
+remote="$1"
+violations=0
+
+while read local_ref local_sha remote_ref remote_sha; do
+  # Skip deletions
+  if [ "$local_sha" = "0000000000000000000000000000000000000000" ]; then
+    continue
+  fi
+
+  if [ "$remote_sha" = "0000000000000000000000000000000000000000" ]; then
+    # New branch: check all commits reachable from local_sha not on any other remote ref
+    range="$local_sha"
+    rev_args="$range --not --remotes=$remote"
+  else
+    rev_args="$remote_sha..$local_sha"
+  fi
+
+  # List "AuthorName|AuthorEmail|CommitterName|CommitterEmail" per commit
+  bad="$(git log --format='%an|%ae|%cn|%ce' $rev_args 2>/dev/null | \
+    awk -F'|' -v n="$ALLOWED_NAME" -v e="$ALLOWED_EMAIL" \
+      '($1!=n)||($2!=e)||($3!=n)||($4!=e){print}')"
+
+  if [ -n "$bad" ]; then
+    echo "----------------------------------------------------------------"
+    echo "PUSH BLOCKED by .githooks/pre-push"
+    echo "  Outgoing commits contain a non-allowed identity."
+    echo "  Allowed: $ALLOWED_NAME <$ALLOWED_EMAIL>"
+    echo "  Offending commits (author|email|committer|email):"
+    echo "$bad" | sed 's/^/    /'
+    echo "----------------------------------------------------------------"
+    violations=1
+  fi
+done
+
+if [ "$violations" -ne 0 ]; then
+  exit 1
+fi
+exit 0
